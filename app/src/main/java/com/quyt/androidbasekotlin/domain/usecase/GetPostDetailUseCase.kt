@@ -6,10 +6,10 @@ import com.quyt.androidbasekotlin.domain.repository.PostRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class GetListPostUseCase (private val postRepository: PostRepository) {
-    suspend operator fun invoke(page: Int, limit: Int): Result<List<Post>> {
+class GetPostDetailUseCase(private val postRepository: PostRepository) {
+    suspend operator fun invoke(id : String): Result<Post> {
         return withContext(Dispatchers.IO){
-            postRepository.getPosts(page, limit)
+            postRepository.getPostDetail(id)
         }
     }
 }

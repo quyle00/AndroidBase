@@ -5,4 +5,5 @@ import com.quyt.androidbasekotlin.domain.model.Result
 
 interface PostRepository {
     suspend fun getPosts(page: Int, limit: Int): Result<List<Post>>
+    suspend fun getPostDetail(id: String): Result<Post>
 }

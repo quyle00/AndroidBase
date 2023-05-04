@@ -18,25 +18,32 @@ class PostRepositoryImpl @Inject constructor(
     override suspend fun getPosts(page: Int, limit: Int): Result<List<Post>> {
         return try {
             if (networkChecker.isNetworkConnected()) {
-//                d { "connection : connect to internet" }
-                // connected to internet
-//                ThreadInfoLogger.logThreadInfo("get top headlines repository")
                 val postResponse = remote.getPosts(page = page, limit = limit)
                 val postList = postResponse.toPostList()
-
                 local.insertPost(postList)
-
                 Result.Success(postList)
             } else {
-//                d { "connection : disconnect" }
-                // not connected
                 val localPost = local.getAllPost()
-//                d { "get data from local: ${localNews.size}" }
                 if (localPost.isEmpty()) {
                     Result.Error(Exception("No internet. Local data is empty"))
                 } else {
                     Result.Success(localPost)
                 }
+            }
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
+
+    override suspend fun getPostDetail(id: String): Result<Post> {
+        return try {
+            if (networkChecker.isNetworkConnected()) {
+                // connected to internet
+                val post = remote.getPostDetail(id)
+                Result.Success(post)
+            } else {
+                // not connected
+                Result.Error(Exception("No internet"))
             }
         } catch (e: Exception) {
             Result.Error(e)

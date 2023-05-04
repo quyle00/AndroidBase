@@ -15,4 +15,12 @@ class PostRemoteDatasourceImpl @Inject constructor(private val services: PostApi
              throw e
          }
     }
+
+    override suspend fun getPostDetail(id: String): Post {
+        try {
+            return services.getPostDetail(id)
+        }catch (e: Exception){
+            throw e
+        }
+    }
 }

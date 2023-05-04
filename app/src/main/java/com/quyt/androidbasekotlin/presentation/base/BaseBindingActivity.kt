@@ -6,11 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.ViewModelProvider
-import javax.inject.Inject
 
 
-abstract class BaseActivity<B : ViewDataBinding> : AppCompatActivity() {
+abstract class BaseBindingActivity<B : ViewDataBinding> : AppCompatActivity() {
 
     private lateinit var mViewDataBinding: B
 

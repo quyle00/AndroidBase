@@ -3,18 +3,19 @@ package com.quyt.androidbasekotlin.presentation.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.quyt.androidbasekotlin.R
 import com.quyt.androidbasekotlin.databinding.ItemPostBinding
 import com.quyt.androidbasekotlin.domain.model.Post
 
-class PostAdapter() : RecyclerView.Adapter<PostViewHolder>() {
+class PostAdapter(private val listener: OnPostListener) : RecyclerView.Adapter<PostViewHolder>() {
     private val mListPost = mutableListOf<Post>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = DataBindingUtil.inflate<ItemPostBinding>(LayoutInflater.from(parent.context), R.layout.item_post, parent, false)
-        return PostViewHolder(binding)
+        return PostViewHolder(binding,listener)
     }
 
     override fun getItemCount(): Int {
@@ -26,15 +27,22 @@ class PostAdapter() : RecyclerView.Adapter<PostViewHolder>() {
     }
 
     fun setListPost(listPost: List<Post>) {
+       val diffResult = DiffUtil.calculateDiff(PostDiffUtilsCallback(mListPost,listPost))
         mListPost.clear()
         mListPost.addAll(listPost)
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
 }
 
-class PostViewHolder(private val binding: ItemPostBinding) : RecyclerView.ViewHolder(binding.root) {
+class PostViewHolder(private val binding: ItemPostBinding,private val listener: OnPostListener) : RecyclerView.ViewHolder(binding.root) {
     fun bind(post: Post) {
-        Glide.with(binding.root.context).load(post.image).into(binding.ivImage)
-        binding.tvCaption.text = post.text
+        binding.post = post
+        binding.llRoot.setOnClickListener {
+            listener.onPostClick(post.id)
+        }
     }
+}
+
+interface OnPostListener {
+    fun onPostClick(postId: String)
 }

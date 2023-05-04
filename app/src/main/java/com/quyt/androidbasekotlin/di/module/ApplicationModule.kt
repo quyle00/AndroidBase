@@ -69,10 +69,5 @@ class ApplicationModule {
     @Singleton
     fun providePostApiServices(retrofit: Retrofit): PostApiService = retrofit.create(PostApiService::class.java)
 
-    @Provides
-    @Singleton
-    fun provideGetPostsUseCase(repository: PostRepository): GetListPostUseCase {
-        return GetListPostUseCase(repository)
-    }
 
 }

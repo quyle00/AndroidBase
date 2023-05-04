@@ -3,15 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/postFragment">
+    app:startDestination="@id/listPostFragment">
 
     <fragment
-        android:id="@+id/postFragment"
+        android:id="@+id/listPostFragment"
         android:name="com.quyt.androidbasekotlin.presentation.ui.post.ListPostFragment"
-        android:label="PostFragment" />
+        android:label="fragment_list_post"
+        tools:layout="@layout/fragment_list_post">
+        <action
+            android:id="@+id/action_listPostFragment_to_postDetailFragment"
+            app:destination="@id/postDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/postDetailFragment"
         android:name="com.quyt.androidbasekotlin.presentation.ui.post.detail.PostDetailFragment"
         android:label="fragment_post_detail"
-        tools:layout="@layout/fragment_post_detail" />
+        tools:layout="@layout/fragment_post_detail" >
+        <argument
+            android:name="postId"
+            app:argType="string" />
+    </fragment>
 </navigation>

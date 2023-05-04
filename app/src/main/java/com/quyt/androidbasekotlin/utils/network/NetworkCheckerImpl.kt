@@ -3,9 +3,8 @@ package com.quyt.androidbasekotlin.utils.network
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.os.Build
 
-class NetworkCheckerImpl(val ctx: Context) : NetworkChecker {
+class NetworkCheckerImpl(private val context: Context) : NetworkChecker {
 
     companion object {
         const val CONNECTION_CELLULAR = 1
@@ -14,7 +13,7 @@ class NetworkCheckerImpl(val ctx: Context) : NetworkChecker {
     }
 
     override fun isNetworkConnected(): Boolean {
-        val connectionType = getConnectionType(ctx)
+        val connectionType = getConnectionType(context)
         return connectionType != 0
     }
 

@@ -6,4 +6,5 @@ import com.quyt.androidbasekotlin.domain.model.Post
 
 interface PostRemoteDatasource {
     suspend fun getPosts(page: Int, limit: Int): ListPostResponse
+    suspend fun getPostDetail(id: String) : Post
 }

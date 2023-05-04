@@ -9,6 +9,8 @@ import com.quyt.androidbasekotlin.data.datasource.remote.PostRemoteDatasourceImp
 import com.quyt.androidbasekotlin.data.datasource.remote.service.PostApiService
 import com.quyt.androidbasekotlin.data.repository.PostRepositoryImpl
 import com.quyt.androidbasekotlin.domain.repository.PostRepository
+import com.quyt.androidbasekotlin.domain.usecase.GetListPostUseCase
+import com.quyt.androidbasekotlin.domain.usecase.GetPostDetailUseCase
 import com.quyt.androidbasekotlin.utils.network.NetworkChecker
 import com.quyt.androidbasekotlin.utils.network.NetworkCheckerImpl
 import dagger.Module
@@ -51,6 +53,18 @@ class DataModule {
         networkCheck: NetworkChecker
     ): PostRepository {
         return PostRepositoryImpl(remote,local,networkCheck)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetListPostUseCase(repository: PostRepository): GetListPostUseCase {
+        return GetListPostUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetPostDetailUseCase(repository: PostRepository): GetPostDetailUseCase {
+        return GetPostDetailUseCase(repository)
     }
 
 

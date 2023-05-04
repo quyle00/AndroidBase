@@ -13,4 +13,7 @@ interface PostDao {
 
     @Insert
     suspend fun insert(post: PostEntity)
+
+    @Query("DELETE FROM Post")
+    suspend fun deleteAllPost()
 }

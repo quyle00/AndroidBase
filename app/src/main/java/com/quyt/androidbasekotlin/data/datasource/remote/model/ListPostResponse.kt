@@ -5,7 +5,6 @@ import com.quyt.androidbasekotlin.domain.model.Post
 class ListPostResponse : BasePagingResponse() {
     val data: List<PostResponse>? = null
 }
-
 fun ListPostResponse.toPostList(): List<Post> {
     return data?.map { it.toPost() } ?: emptyList()
 }
